@@ -1,0 +1,15 @@
+{
+  "name": "assessment",
+  "version": "1.0.0",
+  "description": "assessment code",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "coolwolf",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "mongoose": "^7.4.1"
+  }
+}
