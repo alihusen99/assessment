@@ -1,0 +1,11 @@
+2023-07-30T12:04:06.039Z - Error: Endpoint not found
+    at /Users/gpsfleet/dev/Assessment/index.js:25:17
+    at Layer.handle [as handle_request] (/Users/gpsfleet/dev/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/gpsfleet/dev/node_modules/express/lib/router/index.js:328:13)
+    at /Users/gpsfleet/dev/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/gpsfleet/dev/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/gpsfleet/dev/node_modules/express/lib/router/index.js:280:10)
+    at logTimestampAndMethod (/Users/gpsfleet/dev/Assessment/index.js:15:3)
+    at Layer.handle [as handle_request] (/Users/gpsfleet/dev/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/gpsfleet/dev/node_modules/express/lib/router/index.js:328:13)
+    at /Users/gpsfleet/dev/node_modules/express/lib/router/index.js:286:9

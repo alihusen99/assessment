@@ -2,20 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const errorLogger = require('./errorLogger');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
-// middlewares
+// Middleware untuk parsing body JSON
+app.use(bodyParser.json());
+
+// Middleware untuk log timestamp dan HTTP method
 const logTimestampAndMethod = (req, res, next) => {
   const timestamp = new Date().toISOString();
   const method = req.method;
   console.log(`[${timestamp}] ${method} ${req.originalUrl}`);
   next();
 };
-
-app.use(bodyParser.json());
-// use middleware
-app.use(logTimestampAndMethod);
 
 //DB SETUP
 // Connect to the MongoDB database
@@ -71,8 +72,8 @@ async function deleteBookById(bookId) {
   }
 }
 
+app.use(logTimestampAndMethod);
 
-// routes
 app.get('/', (req, res) => {
   res.send('Home Root Route');
 });
@@ -89,6 +90,7 @@ app.get('/contact', (req, res) => {
 //get
 app.get('/book', async (req, res) => {
   try {
+    const a = JSON.parse(undefined)
     const books = await Book.find();
     res.json(returnResult(200, 'books get Successfully', books));
   } catch (error) {
@@ -165,13 +167,34 @@ app.post('/book/add/then/delete/:id', async(req, res) => {
   }
 });
 
+// Middleware Error Handler 500
+app.use((err, req, res, next) => {
+  console.log('Error Logger Middleware Called');
 
+  // Tangkap pesan kesalahan
+  const errorLog = `${new Date().toISOString()} - ${err.stack}\n`;
+
+  // Tulis pesan kesalahan ke file log (error.log)
+  fs.appendFile('error.log', errorLog, (error) => {
+    if (error) {
+      console.error('Error writing to error.log:', error);
+    }
+  });
+
+  // Lanjutkan ke middleware error handling Express bawaan
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(status).json({ status, msg: message });
+});
+
+// Middleware Error Handler 404 (Ditempatkan di akhir setelah semua rute)
+app.use((req, res, next) => {
+  const error = new Error('Endpoint not found');
+  error.status = 404;
+  next(error);
+});
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-

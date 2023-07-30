@@ -4,12 +4,15 @@
   "description": "assessment code",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "nodemon": "nodemon index.js"
   },
   "author": "coolwolf",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
-    "mongoose": "^7.4.1"
+    "fs": "^0.0.1-security",
+    "mongoose": "^7.4.1",
+    "nodemon": "^3.0.1"
   }
 }
